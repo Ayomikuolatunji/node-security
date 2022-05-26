@@ -1,3 +1,4 @@
+const https=require("https")
 const express=require("express")
 const res = require("express/lib/response")
 const  path = require('path')
@@ -18,7 +19,10 @@ app.get("/",(req,res)=>{
 
 
 
-
-app.listen(8080,()=>{
+https.createServer({
+  key:"",
+  cert:""
+})
+.listen(8080,()=>{
   console.log("App is running on localhost 8080")
 })

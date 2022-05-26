@@ -1,7 +1,6 @@
 const https=require("https")
 const fs=require("fs")
 const express=require("express")
-const res = require("express/lib/response")
 const  path = require('path')
 
 const app=express()
@@ -23,7 +22,7 @@ app.get("/",(req,res)=>{
 https.createServer({
   key: fs.readFileSync("key.pem"),
   cert:fs.readFileSync("private.pem")
-})
+},app)
 .listen(8080,()=>{
   console.log("App is running on localhost 8080")
 })

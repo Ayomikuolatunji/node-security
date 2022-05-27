@@ -4,7 +4,7 @@ const express=require("express")
 const helmet=require("helmet")
 const  path = require('path')
 const passport=require("passport")
-const {Strategy}=require("passport-google-oauth20")
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require("dotenv").config()
 
 const app=express()
@@ -21,21 +21,32 @@ const config={
   ClientSecretKey
 }
 
+passport.use(new GoogleStrategy({
+  clientID: config.ClientId,
+  clientSecret: config.ClientSecretKey,
+  callbackURL: "/auth/google/callback"
+},
+function(accessToken, refreshToken, profile, cb) {
+  console.log(profile);
+    return cb(err, user);
+}
+));
 
-app.use(new Strategy({
-    callbackURL:"/auth/google/callback",
-    ClientId:config.ClientId,
-    clientSecret:config.ClientSecretKey
-},()=>{
-  
+
+app.get("/auth/google",(req,res)=>{})
+
+
+app.get("/auth/google/callback",passport.authenticate("google",{
+  failureRedirect:"",
+  successRedirect:"/",
+  session:false
 }))
 
-app.get("/secret",(req,res)=>{
-   return res.send("your personal secret is 42")
-})
-app.get("/auth/google",(req,res)=>{})
-app.get("/auth/google/callback",(req,res)=>{})
+
 app.get("/auth/logout",(req,res)=>{})
+app.get("/failure",(req,res)=>{
+  res.send("Failed to login")
+})
 
 
 app.get("/",(req,res)=>{

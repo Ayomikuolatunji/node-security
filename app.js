@@ -40,7 +40,9 @@ app.get("/auth/google/callback",passport.authenticate("google",{
   failureRedirect:"",
   successRedirect:"/",
   session:false
-}))
+}),()=>{
+  console.log("Google called us back");
+})
 
 
 app.get("/auth/logout",(req,res)=>{})

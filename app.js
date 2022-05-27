@@ -4,16 +4,15 @@ const express=require("express")
 const helmet=require("helmet")
 const  path = require('path')
 const passport=require("passport")
+const cookieSession = require('cookie-session')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require("dotenv").config()
 
 const app=express()
 app.use(helmet())
 app.use(passport.initialize())
-
-
-const ClientId="key"
-const ClientSecretKey="secret"
+const ClientId=process.env.ClientId
+const ClientSecretKey=process.env.ClientSecretKey
 
 
 const config={
@@ -31,6 +30,21 @@ function(accessToken, refreshToken, profile, cb) {
      cb(null,profile);
 }
 ));
+
+app.use(cookieSession({
+  name:"cookie"
+}))
+
+function checkLoggedIn(req, res, next) { 
+  console.log('Current user is:', req.user);
+  const isLoggedIn = req.isAuthenticated() && req.user;
+  if (!isLoggedIn) {
+    return res.status(401).json({
+      error: 'You must log in!',
+    });
+  }
+  next();
+}
 
 
 app.get("/auth/google",passport.authenticate('google',{

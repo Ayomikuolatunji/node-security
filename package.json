@@ -9,6 +9,7 @@
     "node": ">=13.12.0"
   },
   "dependencies": {
+    "cookie-session": "^2.0.0",
     "debug": "~2.6.9",
     "dotenv": "^16.0.1",
     "express": "~4.17.1",

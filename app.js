@@ -12,8 +12,8 @@ app.use(helmet())
 app.use(passport.initialize())
 
 
-const ClientId="149317685876-tc8an50m1h707e1d7d31j7pinlqjkp9g.apps.googleusercontent.com"
-const ClientSecretKey="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"
+const ClientId="key"
+const ClientSecretKey="secret"
 
 
 const config={
@@ -49,6 +49,7 @@ app.get("/auth/google/callback",
 
 
 app.get("/auth/logout",(req,res)=>{})
+
 app.get("/failure",(req,res)=>{
   res.send("Failed to login")
 })

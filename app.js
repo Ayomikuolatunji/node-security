@@ -28,19 +28,22 @@ passport.use(new GoogleStrategy({
 },
 function(accessToken, refreshToken, profile, cb) {
   console.log(profile);
-    return cb(err, user);
+     cb(null,profile);
 }
 ));
 
 
-app.get("/auth/google",(req,res)=>{})
+app.get("/auth/google",passport.authenticate('google',{
+  scope:['email','profile']
+}))
 
 
-app.get("/auth/google/callback",passport.authenticate("google",{
+app.get("/auth/google/callback",
+  passport.authenticate("google",{
   failureRedirect:"",
   successRedirect:"/",
   session:false
-}),()=>{
+}),(req,res)=>{
   console.log("Google called us back");
 })
 

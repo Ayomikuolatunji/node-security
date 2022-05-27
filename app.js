@@ -17,7 +17,9 @@ const ClientSecretKey=process.env.ClientSecretKey
 
 const config={
   ClientId,
-  ClientSecretKey
+  ClientSecretKey,
+  cookie_Key_One:process.env.cookieOne,
+  cooki_key_two:process.env.cookieTwo
 }
 
 passport.use(new GoogleStrategy({
@@ -32,7 +34,9 @@ function(accessToken, refreshToken, profile, cb) {
 ));
 
 app.use(cookieSession({
-  name:"cookie"
+  name:"cookie",
+  maxAge:24*60*60*1000,
+  keys:[config.cookie_Key_One, config.cooki_key_two]
 }))
 
 function checkLoggedIn(req, res, next) { 

@@ -11,6 +11,7 @@ require("dotenv").config()
 const app=express()
 app.use(helmet())
 app.use(passport.initialize())
+// app.use(passport.session())
 const ClientId=process.env.ClientId
 const ClientSecretKey=process.env.ClientSecretKey
  
@@ -73,7 +74,6 @@ app.get("/auth/google/callback",
   passport.authenticate("google",{
   failureRedirect:"",
   successRedirect:"/",
-  session:false
 }),(req,res)=>{
   console.log("Google called us back");
 })

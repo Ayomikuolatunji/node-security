@@ -13,6 +13,19 @@ app.use(helmet())
 app.use(passport.initialize())
 const ClientId=process.env.ClientId
 const ClientSecretKey=process.env.ClientSecretKey
+ 
+// Save the session to the cookie
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+// Read the session from the cookie
+passport.deserializeUser((id, done) => {
+  // User.findById(id).then(user => {
+  //   done(null, user);
+  // });
+  done(null, id);
+});
 
 
 const config={
